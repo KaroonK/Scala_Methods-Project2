@@ -33,6 +33,26 @@ def primeHelper(x:Int, y:Int) : Boolean ={
 prime(121) //First test case for prime
 prime(577) //Second test case for prime
 
+//Problem 2 - Twin Primes
+def twinprimes (num1:Int, num2: Int):Boolean = {
+  num1 - num2 match{
+    case 2 => {
+      if(prime(num1) && prime(num2)){
+        true
+      }else
+        false
+    }
+    case -2 =>{
+      if(prime(num1) && prime(num2)){
+        true
+      }else
+        false
+    }
+    case _ => false
+  }
+}
+twinprimes(41,43) //First test case for twinprimes
+twinprimes(43,47) //Second test case for twinprimes
 // Test Cases
 /*val pTest1: List[Int] = List (1, 1, 1, 1, 0)
 val qTest1: List[Int] = List(1, 0, 1, 1)
