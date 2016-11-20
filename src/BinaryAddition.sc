@@ -76,6 +76,30 @@ def duplicate(n:List[Int]):List[Int] = n match{
 
 }
 twinprimeslist(50) //First test case for twinprimeslist
+
+//Goldbach's Conjecture
+def goldbach(n:Int) =n match{
+  case (n) if(n<=2) => println("Has to be greater than 2")
+  case (n) if(n%2  == 1) => println("Has to be an even number")
+  case (n) if(n%2  == 0) => {
+    var num = 1
+    goldbachHelper(n,num)
+  }
+}
+def goldbachHelper(n:Int, o:Int) :Unit= {
+  var num1 = n
+  var num2 = o
+  o match{
+    case 2 => goldbachHelper(num1, num2+1)
+    case (o) if(o == n) =>
+    case (o) if(prime(n-o)) => {
+      println(o + " + " + (n-o) + " = " + n)
+    }
+    case _ => goldbachHelper(num1, num2+1)
+
+  }
+}
+goldbach(28)
 // Test Cases
 /*val pTest1: List[Int] = List (1, 1, 1, 1, 0)
 val qTest1: List[Int] = List(1, 0, 1, 1)
