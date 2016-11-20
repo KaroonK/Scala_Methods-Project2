@@ -1,3 +1,5 @@
+import scala.collection.immutable.Nil
+
 // COSC 455 - Programming Languages: Implementation and Design
 // Project 2
 
@@ -53,6 +55,27 @@ def twinprimes (num1:Int, num2: Int):Boolean = {
 }
 twinprimes(41,43) //First test case for twinprimes
 twinprimes(43,47) //Second test case for twinprimes
+
+def twinprimeslist(n:Int): List[Int] = {
+  duplicate(twinprimeslisthelper(n).reverse)
+}
+def twinprimeslisthelper(n:Int) :List[Int] = n match{
+  case 3 => Nil
+  case _ =>{
+    if(prime(n) && prime(n-2)){
+      n::n-2::twinprimeslisthelper(n-2)
+    }else
+      twinprimeslisthelper(n-1)
+  }
+}
+def duplicate(n:List[Int]):List[Int] = n match{
+  case Nil => Nil
+  case x::List() => List(x)
+  case x::tail if(x==tail.head) => duplicate(tail)
+  case x::tail => x::duplicate(tail)
+
+}
+twinprimeslist(50) //First test case for twinprimeslist
 // Test Cases
 /*val pTest1: List[Int] = List (1, 1, 1, 1, 0)
 val qTest1: List[Int] = List(1, 0, 1, 1)
