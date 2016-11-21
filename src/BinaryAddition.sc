@@ -4,102 +4,7 @@ import scala.collection.immutable.Nil
 // Project 2
 
 // NAME: Karoon Khatiwada
-//Problem 1 - Prime Numbers
 
-def prime (Num : Int) : Boolean = {
-  var num1 = 3
-  primeHelper(Num, num1) match {
-    case true => true
-    case false => false
-  }
-}
-def primeHelper(x:Int, y:Int) : Boolean ={
-  var num2 = y
-  x match{
-    case 0 => false
-    case 1 => true
-    case 2 => true
-    case _ => {
-      x % y match {
-        case 0 =>  {
-          if (x == num2)  true
-          else  false
-        }
-        case _ => num2+= 1; primeHelper(x,num2)
-      }
-    }
-
-  }
-
-}
-prime(121) //First test case for prime
-prime(577) //Second test case for prime
-
-//Problem 2 - Twin Primes
-def twinprimes (num1:Int, num2: Int):Boolean = {
-  num1 - num2 match{
-    case 2 => {
-      if(prime(num1) && prime(num2)){
-        true
-      }else
-        false
-    }
-    case -2 =>{
-      if(prime(num1) && prime(num2)){
-        true
-      }else
-        false
-    }
-    case _ => false
-  }
-}
-twinprimes(41,43) //First test case for twinprimes
-twinprimes(43,47) //Second test case for twinprimes
-
-def twinprimeslist(n:Int): List[Int] = {
-  duplicate(twinprimeslisthelper(n).reverse)
-}
-def twinprimeslisthelper(n:Int) :List[Int] = n match{
-  case 3 => Nil
-  case _ =>{
-    if(prime(n) && prime(n-2)){
-      n::n-2::twinprimeslisthelper(n-2)
-    }else
-      twinprimeslisthelper(n-1)
-  }
-}
-def duplicate(n:List[Int]):List[Int] = n match{
-  case Nil => Nil
-  case x::List() => List(x)
-  case x::tail if(x==tail.head) => duplicate(tail)
-  case x::tail => x::duplicate(tail)
-
-}
-twinprimeslist(50) //First test case for twinprimeslist
-
-//Goldbach's Conjecture
-def goldbach(n:Int) =n match{
-  case (n) if(n<=2) => println("Has to be greater than 2")
-  case (n) if(n%2  == 1) => println("Has to be an even number")
-  case (n) if(n%2  == 0) => {
-    var num = 1
-    goldbachHelper(n,num)
-  }
-}
-def goldbachHelper(n:Int, o:Int) :Unit= {
-  var num1 = n
-  var num2 = o
-  o match{
-    case 2 => goldbachHelper(num1, num2+1)
-    case (o) if(o == n) =>
-    case (o) if(prime(n-o)) => {
-      println(o + " + " + (n-o) + " = " + n)
-    }
-    case _ => goldbachHelper(num1, num2+1)
-
-  }
-}
-goldbach(28)
 // Test Cases
 /*val pTest1: List[Int] = List (1, 1, 1, 1, 0)
 val qTest1: List[Int] = List(1, 0, 1, 1)
@@ -117,22 +22,6 @@ val pTest4: List[Int] = List (1, 0, 0, 0, 1, 1, 1)
 val qTest4: List[Int] = List(1, 0, 1, 1, 0)
 val test4ExpectedSolution: List[Int] = List(1, 0, 1, 1, 1, 0, 1)
 
-// This function does the binary addition when there are uneven lists and still must
-// finish the add with the carry bits.
-def finishBinaryAdd(remainingBits: List[Boolean], carryBit: Boolean): List[Boolean] = ???
-
-// This function determines what the next carry bit should be based on current bits.
-def getNextCarryBit(pBit: Boolean, qBit: Boolean, carryBit: Boolean): Boolean = ???
-
-// This function does the binary addition of two Booleans and a carry bit.
-def addBits(pBit: Boolean, qBit: Boolean, carryBit: Boolean): Boolean = ???
-
-// This function does the binary addition of two boolean lists. Note that the lists may not be equal in length.
-def doBinaryAddition(pBits: List[Boolean], qBits: List[Boolean], carryBit: Boolean): List[Boolean] = ???
-
-// This function converts a binary integer list into its corresponding boolean list.
-def convertIntListToBooleanList(intList: List[Int]) = ???
-
 // This function converts a boolean list into its corresponding binary integer list.
 def convertBooleanListToIntList(booleanList: List[Boolean]) = ???
 
@@ -143,12 +32,50 @@ def convertBooleanListToIntList(booleanList: List[Boolean]) = ???
     4. Reverse the lists (to get back in proper order). Use Scala reverse.
     5. Convert the answer back to binary integer form for output.
   Note that the initial carry bit is assumed to be 0 (i.e., false).
-*/
-def binaryAddition(pList: List[Int], qList: List[Int]) = ???
+*/*/
+// This function does the binary addition of two Booleans and a carry bit.
+def addBits(pBit: Boolean, qBit: Boolean, carryBit: Boolean): Boolean = ???
 
+
+// This function does the binary addition when there are uneven lists and still must
+// finish the add with the carry bits.
+def finishBinaryAdd(remainingBits: List[Boolean], carryBit: Boolean): List[Boolean] = {
+  if(!remainingBits.isEmpty && !carryBit){
+    remainingBits
+  } else if (remainingBits.isEmpty && carryBit){
+    List(true)
+  } else {
+    !(remainingBits.head)::finishBinaryAdd(remainingBits.tail, remainingBits.head)
+  }
+}
+
+// This function does the binary addition of two boolean lists. Note that the lists may not be equal in length.
+def doBinaryAddition(pBits: List[Boolean], qBits: List[Boolean], carryBit: Boolean): List[Boolean] = {
+  if(pBits.isEmpty && !qBits.isEmpty && carryBit){
+    finishBinaryAdd(qBits, carryBit)
+  } else if (!pBits.isEmpty && qBits.isEmpty && carryBit){
+    finishBinaryAdd(pBits, carryBit)
+  } else {
+    addBits(pBits.head, qBits.head, carryBit)::doBinaryAddition(pBits.tail, qBits.tail, getNextCarryBit(pBits.head, qBits.head, carryBit))
+  }
+}
+// This function converts a binary integer list into its corresponding boolean list.
+def convertIntListToBooleanList(intList: List[Int]) = {
+  intList.map(element => if(element == 0) false else true).reverse
+}
+// This function determines what the next carry bit should be based on current bits.
+def getNextCarryBit(pBit: Boolean, qBit: Boolean, carryBit: Boolean): Boolean = {
+
+}
+def binaryAddition(pList: List[Int], qList: List[Int]) = {
+
+}
+val pTest1: List[Int] = List (1, 1, 1, 1, 0)
+val qTest1: List[Int] = List(1, 0, 1, 1)
+binaryAddition(pTest1, qTest1)
 // Testing binary addition.
-if (binaryAddition(pTest1, qTest1).equals(test1ExectedSolution)) println("Test 1 passes!") else println("Test 1 fails.")
-if (binaryAddition(pTest2, qTest2).equals(test2ExectedSolution)) println("Test 2 passes!") else println("Test 2 fails.")
-if (binaryAddition(pTest3, qTest3).equals(test3ExectedSolution)) println("Test 3 passes!") else println("Test 3 fails.")
-if (binaryAddition(pTest4, qTest4).equals(test4ExectedSolution)) println("Test 4 passes!") else println("Test 4 fails.")
+//if (binaryAddition(pTest1, qTest1).equals(test1ExectedSolution)) println("Test 1 passes!") else println("Test 1 fails.")
+//if (binaryAddition(pTest2, qTest2).equals(test2ExectedSolution)) println("Test 2 passes!") else println("Test 2 fails.")
+//if (binaryAddition(pTest3, qTest3).equals(test3ExectedSolution)) println("Test 3 passes!") else println("Test 3 fails.")
+//if (binaryAddition(pTest4, qTest4).equals(test4ExectedSolution)) println("Test 4 passes!") else println("Test 4 fails.")
 // Extra Credit workspace*/
