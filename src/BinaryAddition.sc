@@ -80,3 +80,13 @@ if (binaryAddition(pTest2, qTest2).equals(test2ExpectedSolution)) println("Test 
 if (binaryAddition(pTest3, qTest3).equals(test3ExpectedSolution)) println("Test 3 passes!") else println("Test 3 fails.")
 if (binaryAddition(pTest4, qTest4).equals(test4ExpectedSolution)) println("Test 4 passes!") else println("Test 4 fails.")
 // Extra Credit workspace*/
+
+def binarySubtraction(pList:List[Int], qList:List[Int]):List[Int]={
+  binaryAddition(pList, twoComplement(qList))
+}
+def twoComplement (firstList:List[Int]):List[Int] ={
+  val newList : List[Int] = List(1)
+  binaryAddition(convertBooleanListToIntList(convertIntListToBooleanList(firstList).map(element => !element)), newList)
+}
+binarySubtraction(List(0,0,0,0,0,0,0,0), List(0,1,0,0,1,0,1,1))
+//Output should be 10110101
